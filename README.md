@@ -132,5 +132,5 @@ timestamped in git, and each idea can be traced back to the exchange it came fro
 
 ## Licence
 
-No licence has been declared for this repository yet. The related repositories use the
-Fountain of Love License v2.0, dual-licensed with CC BY-NC-SA 4.0.
+Fountain of Love License v2.0, dual-licensed with CC BY-NC-SA 4.0, like the related
+repositories. See [license.md](license.md).
