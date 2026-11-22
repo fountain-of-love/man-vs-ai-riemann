@@ -41,6 +41,7 @@ The central hypothesis, from note 2.1:
 | Path | What it is |
 |---|---|
 | [`original-riemann-chat_0.06.html`](original-riemann-chat_0.06.html) | The latest export of the conversation. |
+| [`original-riemann-chat_0.06.jsonl`](original-riemann-chat_0.06.jsonl) | The same conversation as data: one turn per line (`id`, `at`, `type`, `actor`, `data`). `at` is `null` because the export has no timestamps; `data.first_seen_in` names the export in which the turn first appears. |
 | [`snapshots/`](snapshots/) | Earlier exports, 0.02 to 0.05. Each one contains everything in the version before it, plus what was added since. |
 | [`Onderzoeksnotitie 1`](Onderzoeksnotitie%201) | Note 1: the research approach, a function as a system with five properties, the first reference points (natural numbers, primes, Fibonacci). |
 | [`Onderzoeksnotitie 2.1`](Onderzoeksnotitie%202.1) | Note 2.1: the current note. It refines note 2 and lays out five research rounds, from linearisation to proof and verification. |
