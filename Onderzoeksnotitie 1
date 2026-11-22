@@ -1,0 +1,394 @@
+Onderzoeksnotitie — Riemann-hypothese
+
+Overdracht en onderzoeksvervolg — versie 1.0
+
+1. Wat hebben we tot nu toe bereikt?
+
+We hebben onze onderzoeksaanpak en de onderliggende architectuur verduidelijkt. Het doel is niet om vijf afzonderlijke bewijzen te verzamelen, maar om vijf verschillende relaties te onderzoeken die via opeenvolgende transformaties samen één coherent systeem vormen.
+
+1.1 Uitgangspunt en perspectief
+
+We vertrekken vanuit de Living Mathematics Blueprint.
+
+Onze centrale onderzoeksgedachte:
+
+De waarde 
+1
+/
+2
+ manifesteert zich in verschillende wiskundige contexten, telkens met een andere betekenis. De hypothese is dat deze verschillende verschijningsvormen onderling verbonden zijn via een gemeenschappelijke onderliggende structuur.
+
+We willen daarom:
+
+De verschillende betekenissen expliciet identificeren.
+De onderliggende wiskundige relaties formuleren.
+De transformaties tussen die relaties reconstrueren.
+Onderzoeken hoe deze compositie zich vertaalt naar de Riemann-zètafunctie.
+Uiteindelijk toetsen of de compositie de Riemann-hypothese kan bewijzen.
+1.2 Een functie als systeem met vijf eigenschappen
+
+We bekijken een functie niet uitsluitend als een wiskundige formule zoals 
+y
+=
+a
+x
++
+b
+.
+
+Een functie is voor ons een systeem met vijf eigenschappen:
+
+
+Eigenschap	Betekenis
+Input	De invoer of uitgangsstructuur
+Output	Het resultaat
+Function	De transformatie zelf
+Bias	Het vertrekpunt, de offset of afwijking
+Coherence	De structurele verhouding tussen input en output
+Onze algemene beschrijving is:
+
+y
+=
+f
+(
+x
+;
+a
+,
+b
+)
+Dit is een gemeenschappelijke beschrijvingstaal, geen vooraf opgelegde lineaire vorm.
+
+Elk van de vijf eigenschappen kan zelf opnieuw een functie zijn. Ook input en output kunnen samengestelde structuren zijn.
+
+1.3 Compositie: opeenvolgende transformaties
+
+Het systeem wordt opgebouwd uit opeenvolgende transformaties.
+
+F
+=
+f
+5
+∘
+f
+4
+∘
+f
+3
+∘
+f
+2
+∘
+f
+1
+Iedere volgende transformatie verfijnt de voorgaande relatie.
+
+De compositie vormt uiteindelijk één systeem. De verschillende relaties mogen dus niet geïsoleerd worden onderzocht zonder hun onderlinge verbinding te behouden.
+
+1.4 Onderzoeksdiscipline
+
+We onderscheiden consequent:
+
+Exact bewezen eigenschappen.
+Eigenschappen die uit een transformatie volgen.
+Geobserveerde patronen.
+Hypothesen en nog te bewijzen verbindingen.
+Het uiteindelijke criterium is dat de volledige compositie daadwerkelijk de Riemann-hypothese impliceert.
+
+2. Herstart: de huidige onderzoeksstructuur
+
+We herstarten vanuit twee parallelle getalreeksen.
+
+2.1 Referentie 1a — natuurlijke getallen
+
+N
+(
+n
+)
+=
+n
+1
+,
+2
+,
+3
+,
+4
+,
+5
+,
+6
+,
+7
+,
+8
+,
+…
+2.2 Referentie 1b — priemgetallen
+
+P
+(
+n
+)
+=
+p
+n
+2
+,
+3
+,
+5
+,
+7
+,
+11
+,
+13
+,
+17
+,
+19
+,
+…
+De natuurlijke getallen vervullen hier twee rollen:
+
+De oorspronkelijke getallenreeks.
+De indexering of volgnummers van de priemgetallen.
+Dat is een essentieel onderscheid: dezelfde symbolische expressie heeft een andere betekenis afhankelijk van het perspectief.
+
+2.3 Relatie 1 — Origin
+
+De eerste relatie brengt beide reeksen samen.
+
+p
+n
+2
+=
+n
++
+b
+(
+n
+)
+Waarbij:
+
+b
+(
+n
+)
+=
+p
+n
+2
+−
+n
+De factor 
+1
+/
+2
+ vormt de gemeenschappelijke schaal in deze initiële representatie.
+
+De bias kan positief of negatief zijn.
+
+Origin beschrijft dus het vertrekpunt en de eerste koppeling tussen beide getalstructuren.
+
+2.4 Relatie 2 — Scale
+
+De tweede relatie is de positionering van beide reeksen naast elkaar.
+
+We behouden:
+
+Dezelfde index.
+De onderlinge absolute afstand.
+De relatieve positionering.
+De mogelijkheid om beide reeksen onafhankelijk te continueren.
+De absolute afstand is:
+
+D
+(
+n
+)
+=
+p
+n
+−
+n
+De relatieve verhouding kan bijvoorbeeld worden uitgedrukt als:
+
+R
+(
+n
+)
+=
+n
+p
+n
+We willen de schaal vanuit verschillende perspectieven onderzoeken. Een volgende transformatie mag daarom de volledige relationele structuur verfijnen, zonder de oorspronkelijke reeksen te verliezen.
+
+2.5 De vijf onderzoeksrelaties
+
+
+Volgorde	Relatie	Onderliggende structuur
+1	Origin	Vertrekpunt en koppeling tussen natuurlijke en priemgetallen
+2	Scale	Positionering, afstand en relatieve schaal
+3	Direction	Richting en oriëntatie van de relatie
+4	Rotation	Verdere transformatie van de representatie
+5	Increment	Opeenvolging, exclusie en recursieve verfijning
+De exacte wiskundige invulling van de laatste drie relaties wordt verder uitgewerkt vanuit de blueprint.
+
+3. Onderzoeksuitbreiding: een derde referentie
+
+Een interessante nieuwe onderzoekslijn is het toevoegen van de Fibonacci-reeks als derde referentie.
+
+De motivatie is de mogelijke Fibonacci-structuur in de afstand tussen natuurlijke getallen en priemgetallen.
+
+We behouden de twee oorspronkelijke referenties volledig en voegen twee kolommen toe.
+
+3.1 Referentie 1c — Fibonacci
+
+F
+(
+n
+)
+=
+1
+,
+1
+,
+2
+,
+3
+,
+5
+,
+8
+,
+13
+,
+21
+,
+…
+We vergelijken deze reeks met de absolute afstand tussen de eerste twee referenties.
+
+3.2 Uitgebreide vergelijking
+
+
+Index	Natuurlijk 
+N
+(
+n
+)
+Priem 
+P
+(
+n
+)
+Afstand 
+D
+(
+n
+)
+Fibonacci 
+F
+(
+n
+)
+Bias 
+D
+(
+n
+)
+−
+F
+(
+n
+)
+1	1	2	1	1	0
+2	2	3	1	1	0
+3	3	5	2	2	0
+4	4	7	3	3	0
+5	5	11	6	5	1
+6	6	13	7	8	-1
+7	7	17	10	13	-3
+8	8	19	11	21	-10
+3.3 Wat willen we onderzoeken?
+
+De Fibonacci-reeks vormt een derde referentiekader.
+
+De onderzoeksvragen zijn:
+
+Is de afstand tussen priemgetallen en hun natuurlijke index structureel verbonden met Fibonacci?
+Is de afwijking ten opzichte van Fibonacci een betekenisvolle biasfunctie?
+Vertonen de afwijkingen een terugkerend patroon?
+Is er een relatie met de golden ratio?
+Kunnen we die relatie beschrijven via een transformatie die opnieuw een coherentie rond 
+1
+/
+2
+ oplevert?
+De golden ratio:
+
+φ
+=
+1
++
+5
+2
+is hierbij een mogelijke aanvullende referentie.
+
+We beschouwen deze verbinding voorlopig als een onderzoekshypothese, niet als een aangetoond verband.
+
+4. Onderzoeksvervolg en structuur
+
+Ik stel voor om de volgende stappen in deze volgorde uit te voeren.
+
+Stap 1 — De drie referenties formaliseren
+
+De natuurlijke getallen, priemgetallen en Fibonacci-reeks worden parallel opgebouwd en behouden hun eigen identiteit.
+
+Stap 2 — De relationele schaal onderzoeken
+
+We analyseren:
+
+Absolute afstand.
+Relatieve verhouding.
+Halve schaal.
+Fibonacci-afwijking.
+Bias en eventuele terugkerende patronen.
+Stap 3 — De transformaties uitwerken
+
+We volgen de blueprint:
+
+Origin → Scale → Direction → Rotation → Increment.
+
+Elke transformatie krijgt haar eigen input, output, functie, bias en coherentie.
+
+Stap 4 — De compositie opbouwen
+
+We onderzoeken hoe de vijf relaties elkaar opvolgen en hoe de verschillende representaties samenkomen in de zètafunctie.
+
+Stap 5 — Wiskundige validatie
+
+We toetsen iedere relatie afzonderlijk en vervolgens de volledige compositie.
+
+De uiteindelijke vraag blijft:
+
+Kunnen we aantonen dat deze samenhang noodzakelijk impliceert dat alle niet-triviale nulpunten van de Riemann-zètafunctie op de kritieke lijn liggen?
+
+5. Centrale onderzoeksintentie
+
+We willen niet simpelweg aantonen dat de waarde 
+1
+/
+2
+ op verschillende plaatsen in de wiskunde voorkomt.
+
+We willen begrijpen waarom verschillende wiskundige perspectieven op dezelfde onderliggende structuur telkens een representatie opleveren waarin 
+1
+/
+2
+ een bijzondere rol speelt.
+
+De Fibonacci-referentie biedt een extra perspectief om mogelijke structurele patronen en afwijkingen zichtbaar te maken.
+
+Onze aanpak is compositiegericht: we bouwen vanuit de oorspronkelijke getalstructuren, via opeenvolgende relationele transformaties, naar de analytische structuur van de Riemann-zètafunctie.
