@@ -41,12 +41,19 @@ The central hypothesis, from note 2.1:
 | Path | What it is |
 |---|---|
 | [`original-riemann-chat_0.06.html`](original-riemann-chat_0.06.html) | The latest export of the conversation. |
-| [`original-riemann-chat_0.06.jsonl`](original-riemann-chat_0.06.jsonl) | The same conversation as data: one turn per line (`id`, `at`, `type`, `actor`, `data`). `at` is `null` because the export has no timestamps; `data.first_seen_in` names the export in which the turn first appears. |
+| [`traceability/`](traceability/) | The observer system's boundary: derived data (the conversation as JSONL), the tools that regenerate it, the provenance of the git history and known gaps. |
 | [`snapshots/`](snapshots/) | Earlier exports, 0.02 to 0.05. Each one contains everything in the version before it, plus what was added since. |
 | [`Onderzoeksnotitie 1`](Onderzoeksnotitie%201) | Note 1: the research approach, a function as a system with five properties, the first reference points (natural numbers, primes, Fibonacci). |
 | [`Onderzoeksnotitie 2.1`](Onderzoeksnotitie%202.1) | Note 2.1: the current note. It refines note 2 and lays out five research rounds, from linearisation to proof and verification. |
 | [`history/`](history/) | Notes that have been superseded. Note 2 lives here since 2.1 replaced it. |
 | [`Onderzoeksnotitie-2.1-paper.pdf`](Onderzoeksnotitie-2.1-paper.pdf) | *De compositie van de Riemann-zètafunctie*: note 2.1 written up as a paper, produced outside the conversation. |
+
+## Two systems, one boundary
+
+Two separate systems work in this repository. The **research system** produces the
+conversation, the notes and the paper. The **observer system** keeps that work
+reproducible and traceable, and does no research itself. Its boundary, rules and derived
+artefacts live in [`traceability/`](traceability/README.md).
 
 ## How the trail grew
 
@@ -115,7 +122,8 @@ is the intended tooling for turning this trail into auditable findings:
 - **A person decides.** An agent may prepare a finding; a recorded human decision
   approves or releases it.
 
-chaOS is not installed in this repository yet.
+The chaOS seed hook is installed for the observer system: it journals each prompt and
+reply in `.spiral/`. See [`traceability/`](traceability/README.md#shared-ground).
 
 ### Inspiration: love as a field
 
