@@ -19,6 +19,7 @@ sources:
 relations:
   - { type: uses, to: skill.observer, weight: 0, evidence: [] }
   - { type: uses, to: workflow.record-research-change, weight: 0, evidence: [] }
+  - { type: uses, to: workflow.hand-off, weight: 0, evidence: [] }
   - { type: assessed-against, to: criterion.observer-validation-rules, weight: 0, evidence: [] }
 assumptions: []
 review: not-yet-developed
@@ -34,6 +35,7 @@ router:
     - derive data from research artefacts (for example the turns as JSONL)
     - check that the research trail is reproducible and traceable
     - report what cannot be traced
+    - receive a returned hand-off
   not_for:
     - doing, judging, summarising or steering the research
     - changing the chaOS runtime or its journal
@@ -42,6 +44,7 @@ router:
   shared: [README.md, license.md, .gitignore, .claude/]
   never_writes: [knowledge-engineering-chaOS/, .spiral/]
   events: traceability/register/events.jsonl
+  handoffs: traceability/register/handoffs/
   validate: node traceability/tools/validate.mjs
 ---
 
@@ -82,6 +85,7 @@ trail has a hole, it says so and leaves the hole.
 | Validate | Check the rules in `criterion.observer-validation-rules`. |
 | Register | Append chaOS events for every operation on the repository, by whoever made it. |
 | Report gaps | List what cannot be traced, without filling it in. |
+| Hand off | Publish a task outside the boundary as a sealed instruction with its origin, and follow it until it returns. |
 
 **Functions** (the tools)
 
@@ -90,6 +94,7 @@ trail has a hole, it says so and leaves the hole.
 | Extract turns | `traceability/tools/extract_turns.py` | chat exports | `traceability/<export>.jsonl` |
 | Validate | `traceability/tools/validate.mjs` | everything, the chaOS contract | nothing |
 | Record an event | `traceability/tools/record_event.mjs` | the chaOS contract | one appended line in `events.jsonl` |
+| Hand off | `traceability/tools/handoff.mjs` | the register events | a sealed file in `handoffs/` and events |
 | Reconstruct history | `traceability/tools/reconstruct-history.sh` | research files | git objects. **Record only; ran once.** |
 
 ## Behaviour
@@ -102,7 +107,7 @@ pushing, and changes to shared ground.
 
 ## Relations
 
-- **uses** `skill.observer` and `workflow.record-research-change`.
+- **uses** `skill.observer`, `workflow.record-research-change` and `workflow.hand-off`.
 - **assessed-against** `criterion.observer-validation-rules`.
 - Runs on the shared chaOS runtime without changing it. A future router will read the
   `router` block above to send matching work here.

@@ -8,6 +8,7 @@
 // contract to validate events, and never writes to knowledge-engineering-chaOS/ or .spiral/.
 // Exit 0 when every rule passes, 1 otherwise.
 import { execFileSync } from "node:child_process";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -110,8 +111,9 @@ rule("VR-08", "every cited commit resolves", () =>
 // VR-09 No invented times: every operation states when it occurred, and on what basis.
 rule("VR-09", "every occurrence time has a basis", () =>
   events.filter((e) => {
-    const o = e.data?.occurred;
-    return !o || !o.basis || !(o.at || (o.not_before && o.not_after));
+    const o = e.data?.occurred, ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
+    const times = o ? (o.at ? [o.at] : [o.not_before, o.not_after]) : [];
+    return !o || !o.basis || !times.every((t) => ISO.test(String(t)));
   }).map((e) => `${e.id} (${e.type}) lacks an occurrence time with a basis`));
 
 // VR-10 The shared chaOS runtime is untouched.
@@ -128,6 +130,35 @@ rule("VR-10", "the chaOS runtime is unmodified", () => {
 // VR-11 Pushes are the person's: no push event has an agent as actor.
 rule("VR-11", "only a person pushes", () =>
   events.filter((e) => e.type === "git-push" && e.actor?.role !== "person").map((e) => `${e.id} is a push by ${e.actor.role}`));
+
+// VR-15 A published hand-off is sealed: its file still matches the sha256 in its event.
+rule("VR-15", "published hand-offs are unchanged", () =>
+  events.filter((e) => e.type === "handoff-published").flatMap((e) => {
+    const file = path.join(ROOT, e.data?.file ?? "");
+    if (!e.data?.file || !fs.existsSync(file)) return [`${e.data?.handoff}: file ${e.data?.file} missing`];
+    const hash = crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+    return hash === e.data.sha256 ? [] : [`${e.data.handoff}: ${e.data.file} changed after publication`];
+  }));
+
+// VR-16 A hand-off follows its lifecycle: published once, then returns, then at most one close.
+rule("VR-16", "hand-offs follow their lifecycle", () => {
+  const state = new Map(), problems = [];
+  for (const e of events) {
+    const id = e.data?.handoff;
+    if (!e.type?.startsWith("handoff-")) continue;
+    if (!id) { problems.push(`${e.id} names no hand-off`); continue; }
+    const s = state.get(id);
+    if (e.type === "handoff-published") { if (s) problems.push(`${id} published twice`); else state.set(id, "open"); continue; }
+    if (!s) problems.push(`${id} ${e.type} before it was published`);
+    else if (s === "closed") problems.push(`${id} ${e.type} after it was closed`);
+    if (e.type === "handoff-closed") {
+      state.set(id, "closed");
+      if (!["handled-elsewhere", "handled-here", "withdrawn"].includes(e.data.outcome)) problems.push(`${id} closed with unknown outcome ${e.data.outcome}`);
+      if (e.data.outcome === "handled-here" && !e.data.reason) problems.push(`${id} handled-here without a reason`);
+    }
+  }
+  return problems;
+});
 
 let failed = 0;
 for (const r of results) {

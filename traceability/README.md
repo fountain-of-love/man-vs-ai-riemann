@@ -50,8 +50,10 @@ date only where they describe structure or provenance:
 | [`tools/extract_turns.py`](tools/extract_turns.py) | The extractor. It refuses to write if a turn's text differs between exports. | — | — |
 | [`tools/reconstruct-history.sh`](tools/reconstruct-history.sh) | **Record only.** The script that reconstructed the first nine commits. | — | Do not rerun. |
 | [`tools/record_event.mjs`](tools/record_event.mjs) | Appends one event to the register, validated against the chaOS contract. | — | — |
+| [`tools/handoff.mjs`](tools/handoff.mjs) | Publishes a task outside the boundary as a hand-off, and records its return and close. | — | — |
+| [`tools/lib/`](tools/lib/) | Shared code for the tools: appending events and deriving hand-off state. | — | — |
 | [`tools/validate.mjs`](tools/validate.mjs) | Checks the validation rules a machine can check. Writes nothing. | — | `node traceability/tools/validate.mjs` |
-| [`register/`](register/README.md) | The observer's register: the system, its skill, workflow and validation rules, and an event for every operation on the repository. In chaOS formats. | Git records, this conversation | — |
+| [`register/`](register/README.md) | The observer's register: the system, its skill, workflows and validation rules, hand-offs, and an event for every operation on the repository. In chaOS formats. | Git records, this conversation | — |
 
 Fields in the JSONL:
 

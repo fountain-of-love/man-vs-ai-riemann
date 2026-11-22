@@ -26,7 +26,9 @@ feels. So:
 | [`nodes/system/observer.md`](nodes/system/observer.md) | node (`entity`) | The system: its intentions, capabilities and functions, its boundary, and the router manifest. |
 | [`skills/observer/SKILL.md`](skills/observer/SKILL.md) | skill | The approach, as a skill an agent loads. |
 | [`nodes/workflow/record-research-change.md`](nodes/workflow/record-research-change.md) | node (`concept`) | The workflow: observe, place, record, derive, validate, then the person publishes. |
-| [`nodes/criterion/observer-validation-rules.md`](nodes/criterion/observer-validation-rules.md) | node (`source`, role `criterion`) | The validation rules VR-01 to VR-14, edition 1. |
+| [`nodes/workflow/hand-off.md`](nodes/workflow/hand-off.md) | node (`concept`) | The workflow for tasks outside the boundary: recognise, publish, deliver, return, close. |
+| [`handoffs/`](handoffs/) | node (`source`) per hand-off | Published instructions for other systems, sealed by sha256. |
+| [`nodes/criterion/observer-validation-rules.md`](nodes/criterion/observer-validation-rules.md) | node (`source`, role `criterion`) | The validation rules VR-01 to VR-17, edition 3. |
 | [`nodes/source/`](nodes/source/) | node (`source`) | Where the facts come from: the git records and this conversation. |
 | [`events.jsonl`](events.jsonl) | event | Every operation on the repository, one per line, append-only. |
 
@@ -71,6 +73,28 @@ Append with `node traceability/tools/record_event.mjs`, which validates against 
 contract and refuses an event without an occurrence time and basis. The chaOS integration is deliberately not in this log: it belongs to
 the shared runtime, not to this system. Its commit is recorded, because a commit is an
 operation on the repository.
+
+## Hand-offs
+
+A task outside the observer's boundary is not done here. It becomes a **hand-off**: an
+event that holds an instruction, published with its origin, so the person, other systems
+and a future router can pick it up.
+
+- **Origin** is `misdirected` (asked of the observer, belongs elsewhere) or `emerged`
+  (arose in the work), with its basis: for example the chaOS journal event of the prompt.
+- **Published** means a sealed file in [`handoffs/`](handoffs/) plus a `handoff-published`
+  event holding its sha256. It becomes public when the person pushes.
+- **Returns** are recorded as `handoff-returned`, with `needs_handling` when the work turns
+  out to belong here after all.
+- **Closed** as `handled-elsewhere`, `withdrawn`, or `handled-here` with the reason.
+
+```bash
+node traceability/tools/handoff.mjs list
+```
+
+| Hand-off | For | Origin | State |
+|---|---|---|---|
+| [0001 Set up the paper writer system](handoffs/0001-paper-writer-setup.md) | `system.paper-writer` | misdirected: the person asked the observer to instruct the paper writer | closed `handled-here`: no receiving system existed, and the person confirmed it was right to handle it here |
 
 ## Adding to the register
 

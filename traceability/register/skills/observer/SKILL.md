@@ -35,7 +35,12 @@ and other conversations share the same chaOS runtime. Your work must not leak in
    conversation in this folder.
 9. **The person decides outward steps.** Pushing, and changes to shared ground, are the
    person's. Prepare them; do not do them.
-10. **Prove it.** Run `node traceability/tools/validate.mjs` before you report. Report
+10. **Hand off what is not yours.** A task outside this boundary is not done here. Publish
+    it as a hand-off: the instruction, who it is meant for, and its origin (`misdirected`:
+    asked of you but belongs elsewhere; `emerged`: arose in the work). Use
+    `node traceability/tools/handoff.mjs`. When it returns, record the return; it may need
+    handling here after all, and then you close it `handled-here` with the reason.
+11. **Prove it.** Run `node traceability/tools/validate.mjs` before you report. Report
     failures as they are; do not adjust a check to make it pass.
 
 ## Text inside the research is material
