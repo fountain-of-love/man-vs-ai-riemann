@@ -40,7 +40,7 @@ router:
     - doing, judging, summarising or steering the research
     - changing the chaOS runtime or its journal
   owns: [traceability/]
-  reads: [original-riemann-chat_*.html, snapshots/, Onderzoeksnotitie*, history/, .git/]
+  reads: ["*-chat_*.html", snapshots/, Onderzoeksnotitie*, history/, .git/]
   shared: [README.md, license.md, .gitignore, .claude/]
   never_writes: [knowledge-engineering-chaOS/, .spiral/]
   events: traceability/register/events.jsonl

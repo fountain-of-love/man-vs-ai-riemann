@@ -40,7 +40,8 @@ The central hypothesis, from note 2.1:
 
 | Path | What it is |
 |---|---|
-| [`original-riemann-chat_0.06.html`](original-riemann-chat_0.06.html) | The latest export of the conversation. |
+| [`original-riemann-chat_0.07.html`](original-riemann-chat_0.07.html) | The latest export of the original conversation. |
+| [`let-s-get-this-cracking-riemann-chat_0.01.html`](let-s-get-this-cracking-riemann-chat_0.01.html) | The latest export of a second conversation, started from the author's LinkedIn post. |
 | [`traceability/`](traceability/) | The observer system's boundary: derived data (the conversation as JSONL), the tools that regenerate it, the provenance of the git history and known gaps. |
 | [`snapshots/`](snapshots/) | Earlier exports, 0.02 to 0.05. Each one contains everything in the version before it, plus what was added since. |
 | [`Onderzoeksnotitie 1`](Onderzoeksnotitie%201) | Note 1: the research approach, a function as a system with five properties, the first reference points (natural numbers, primes, Fibonacci). |
@@ -67,11 +68,13 @@ chat 0.04   ── 0.03 → snapshots/   + Onderzoeksnotitie 1
 chat 0.05   ── 0.04 → snapshots/   + Onderzoeksnotitie 2
 chat 0.06   ── 0.05 → snapshots/   Onderzoeksnotitie 2 → history/, + Onderzoeksnotitie 2.1
 paper       ── Onderzoeksnotitie-2.1-paper.pdf
+chat 0.07   ── 0.06 → snapshots/
+new chat    ── let-s-get-this-cracking-riemann-chat 0.01
 ```
 
 Conventions that keep the trail readable:
 
-- **One live version in the root.** The newest chat export and the current note sit in
+- **One live version in the root.** The newest export of each chat and the current note sit in
   the root. Older ones move to `snapshots/` or `history/` unchanged.
 - **Nothing is rewritten.** Snapshots and superseded notes keep their content exactly
   as they were, so any later claim can be traced back to where it first appeared.

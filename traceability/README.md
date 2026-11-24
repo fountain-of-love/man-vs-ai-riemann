@@ -6,7 +6,7 @@ Two separate systems work here:
 
 | System | Role | Owns |
 |---|---|---|
-| **Research system** | Does the research: the conversation, the notes, the paper. | The chat exports, `snapshots/`, the `Onderzoeksnotitie` files, `history/`, the paper. |
+| **Research system** | Does the research: the conversations, the notes, the paper. | The chat exports (`*-chat_<version>.html`), `snapshots/`, the `Onderzoeksnotitie` files, `history/`, the paper. |
 | **Observer system** (this one) | Observes the research and keeps it reproducible and traceable. It does no research. | `traceability/`, plus the tooling listed below. |
 
 The boundary is hard. Neither system works inside the other's territory.
@@ -46,8 +46,10 @@ date only where they describe structure or provenance:
 
 | Path | What it is | Source | Regenerate with |
 |---|---|---|---|
-| [`original-riemann-chat_0.06.jsonl`](original-riemann-chat_0.06.jsonl) | The conversation as data: 40 turns, one per line, with keys `id`, `at`, `type`, `actor` and `data`. | All chat exports, from 0.02 to 0.06. | `python3 -I traceability/tools/extract_turns.py` |
-| [`tools/extract_turns.py`](tools/extract_turns.py) | The extractor. It refuses to write if a turn's text differs between exports. | — | — |
+| [`original-riemann-chat_0.07.jsonl`](original-riemann-chat_0.07.jsonl) | The original conversation as data: 43 turns, one per line, with keys `id`, `at`, `type`, `actor` and `data`. | Its exports 0.02 to 0.07. | `python3 -I traceability/tools/extract_turns.py` |
+| [`original-riemann-chat_0.06.jsonl`](original-riemann-chat_0.06.jsonl) | The same conversation as it stood at 0.06: 40 turns. Kept as derived; still reproduces. | Its exports 0.02 to 0.06. | the same |
+| [`let-s-get-this-cracking-riemann-chat_0.01.jsonl`](let-s-get-this-cracking-riemann-chat_0.01.jsonl) | A second conversation, started from the author's LinkedIn post: 22 turns. | Its export 0.01. | the same |
+| [`tools/extract_turns.py`](tools/extract_turns.py) | The extractor. The output name picks the conversation and the version (`<conversation>_<version>.jsonl`). It refuses to write if a turn's text differs between exports. Without arguments it regenerates every JSONL here. | — | — |
 | [`tools/reconstruct-history.sh`](tools/reconstruct-history.sh) | **Record only.** The script that reconstructed the first nine commits. | — | Do not rerun. |
 | [`tools/record_event.mjs`](tools/record_event.mjs) | Appends one event to the register, validated against the chaOS contract. | — | — |
 | [`tools/handoff.mjs`](tools/handoff.mjs) | Publishes a task outside the boundary as a hand-off, and records its return and close. | — | — |
@@ -100,6 +102,15 @@ observer never writes to it; the register is.
 ## Known gaps
 
 - **No timestamps.** The chat exports contain no times for the turns, so `at` is `null`.
+- **Empty last turn in 0.07.** Turn 43 of `original-riemann-chat` is an assistant message with
+  no content in the export itself; the reply was probably still being generated, or cut off,
+  when it was exported. Its `text` is `""`.
+- **A second 0.06 export.** A re-export of 0.06 (same turns and text, different page
+  styling, sha256 `cf713859…`) arrived on 2026-11-22. The committed 0.06 stayed the
+  snapshot; the re-export is not in the repository.
+- **When 0.07 and the 0.06 snapshot were committed.** 0.07 arrived on 2026-11-22 but was
+  committed on 2026-11-24, together with the move of 0.06 to `snapshots/`. Arrival times
+  in the register come from the file birth times.
 - **Reconstructed dates.** The first nine commits are dated to the reconstruction, not
   to when the files were made.
 - **Attachment content missing.** Turn 9 refers to a screenshot of a mapping table.

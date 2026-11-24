@@ -4,8 +4,14 @@
 Usage (from the repository root):
     python3 -I traceability/tools/extract_turns.py [REPO_ROOT] [OUT_FILE]
 
-Reads the latest export in the root (original-riemann-chat_*.html) and every
-export in snapshots/. Writes one JSON object per turn with the keys
+Each conversation is a series of exports named <series>_<major>.<minor>.html:
+the live one in the root, older ones in snapshots/. OUT_FILE names the series
+and the version to extract up to: traceability/<series>_<version>.jsonl.
+Exports newer than that version are ignored, so every derived file stays
+reproducible after the conversation grows. Without OUT_FILE, every existing
+traceability/*.jsonl is regenerated.
+
+Writes one JSON object per turn of that version, with the keys
 id, at, type, actor, data. Read-only towards the research files.
 
 - id      message id from the export
@@ -114,14 +120,18 @@ def version(path):
     return tuple(int(x) for x in re.search(r'_(\d+)\.(\d+)\.html$', path).groups())
 
 
-def main():
-    root = sys.argv[1] if len(sys.argv) > 1 else '.'
-    exports = glob.glob(os.path.join(root, 'snapshots', 'original-riemann-chat_*.html')) + \
-              glob.glob(os.path.join(root, 'original-riemann-chat_*.html'))
+def extract(root, out):
+    m = re.match(r'^(.+)_(\d+)\.(\d+)\.jsonl$', os.path.basename(out))
+    if not m:
+        sys.exit(f'{out}: name must be <series>_<major>.<minor>.jsonl')
+    series, upto = m.group(1), (int(m.group(2)), int(m.group(3)))
+    pattern = glob.escape(series) + '_*.html'
+    exports = [e for e in glob.glob(os.path.join(root, 'snapshots', pattern)) +
+               glob.glob(os.path.join(root, pattern))
+               if re.search(r'_\d+\.\d+\.html$', e) and version(e) <= upto]
     exports.sort(key=version)
-    latest = exports[-1]
-    out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
-        root, 'traceability', os.path.basename(latest)[:-5] + '.jsonl')
+    if not exports or version(exports[-1]) != upto:
+        sys.exit(f'no export {series}_{upto[0]}.{upto[1]}.html in the root or snapshots/')
 
     by_export = [(os.path.basename(e), turns_of(e)) for e in exports]
     final = {t['id']: t['text'] for t in by_export[-1][1]}
@@ -141,6 +151,15 @@ def main():
             rec = {'id': t['id'], 'at': None, 'type': 'message', 'actor': t['role'], 'data': data}
             f.write(json.dumps(rec, ensure_ascii=False) + '\n')
     print(f'{len(by_export[-1][1])} turns from {len(exports)} exports -> {out}')
+
+
+def main():
+    root = sys.argv[1] if len(sys.argv) > 1 else '.'
+    if len(sys.argv) > 2:
+        extract(root, sys.argv[2])
+    else:
+        for out in sorted(glob.glob(os.path.join(root, 'traceability', '*.jsonl'))):
+            extract(root, out)
 
 
 if __name__ == '__main__':

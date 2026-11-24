@@ -8,9 +8,9 @@ summary: >
   trail to be reproducible and traceable.
 status: defined
 maturity: draft
-revision: 3
-edition: "3 · 2026-11-22"
-citation: traceability/register/nodes/criterion/observer-validation-rules.md, edition 3
+revision: 4
+edition: "4 · 2026-11-24"
+citation: traceability/register/nodes/criterion/observer-validation-rules.md, edition 4
 access: direct
 licence: see license.md
 scope: This repository. Checked by node traceability/tools/validate.mjs where marked auto.
@@ -39,9 +39,9 @@ it reports.
 | ID | Rule | Check |
 |---|---|---|
 | VR-01 | **Research artefacts are never edited.** A research file keeps one content across every commit and in the working tree. Moving it is allowed. | auto |
-| VR-02 | **One live export in the root.** Exactly one chat export in the root, the newest; every other export is in `snapshots/` and older. | auto |
+| VR-02 | **One live export per conversation.** Each conversation (`<name>-chat_<version>.html`) has exactly one export in the root, its newest; every older export of it is in `snapshots/`. *Edition 4: per conversation, as the research now has more than one.* | auto |
 | VR-03 | **Exports are cumulative.** Each turn has the same text in every export that contains it. | auto, inside VR-04 |
-| VR-04 | **Derived artefacts reproduce.** Rerunning the tool from committed sources gives byte-identical output. | auto |
+| VR-04 | **Derived artefacts reproduce.** Rerunning the tool from committed sources gives byte-identical output. A derived file names the version it was made from, so it keeps reproducing after the conversation grows. *Edition 4.* | auto |
 | VR-05 | **Every file has a territory.** Each tracked file belongs to the research, to shared ground or to `traceability/`. | auto |
 | VR-06 | **Events conform to chaOS.** Every line in `events.jsonl` passes the chaOS seed's `validateEvent`. | auto |
 | VR-07 | **The event log is append-only.** Ids are unique, and the committed log is a prefix of the current one. | auto |

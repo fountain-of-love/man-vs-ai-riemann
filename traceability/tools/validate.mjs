@@ -17,7 +17,8 @@ const ROOT = process.cwd();
 const CHAOS = path.join(ROOT, "knowledge-engineering-chaOS");
 const CHAOS_COMMIT = "b1e9afe";
 const EVENTS = "traceability/register/events.jsonl";
-const RESEARCH = [/^original-riemann-chat_\d+\.\d+\.html$/, /^snapshots\//, /^Onderzoeksnotitie/, /^history\//];
+const EXPORT = /^[a-z0-9-]+-chat_\d+\.\d+\.html$/;
+const RESEARCH = [EXPORT, /^snapshots\//, /^Onderzoeksnotitie/, /^history\//];
 const SHARED = [/^README\.md$/, /^license\.md$/, /^\.gitignore$/, /^\.claude\//];
 const OBSERVER = [/^traceability\//];
 
@@ -47,15 +48,22 @@ rule("VR-01", "research artefacts are never edited", () => {
   return problems;
 });
 
-// VR-02 One live export in the root, the newest; every older export in snapshots/.
-rule("VR-02", "one live export in the root, older ones in snapshots/", () => {
+// VR-02 Per conversation: one live export in the root, the newest; every older export in snapshots/.
+rule("VR-02", "per conversation, one live export in the root, older ones in snapshots/", () => {
   const ver = (f) => f.match(/_(\d+)\.(\d+)\.html$/).slice(1).map(Number);
   const cmp = (a, b) => ver(a)[0] - ver(b)[0] || ver(a)[1] - ver(b)[1];
+  const series = (f) => path.basename(f).replace(/_\d+\.\d+\.html$/, "");
   const files = git("ls-files").split("\n");
-  const root = files.filter((f) => /^original-riemann-chat_\d+\.\d+\.html$/.test(f));
-  const snaps = files.filter((f) => /^snapshots\/original-riemann-chat_\d+\.\d+\.html$/.test(f));
-  if (root.length !== 1) return [`expected 1 export in the root, found ${root.length}`];
-  return snaps.filter((s) => cmp(path.basename(s), root[0]) >= 0).map((s) => `${s} is not older than ${root[0]}`);
+  const root = files.filter((f) => EXPORT.test(f));
+  const snaps = files.filter((f) => f.startsWith("snapshots/") && EXPORT.test(path.basename(f)));
+  const problems = [];
+  for (const name of new Set([...root, ...snaps].map(series))) {
+    const live = root.filter((f) => series(f) === name);
+    if (live.length !== 1) { problems.push(`${name}: expected 1 export in the root, found ${live.length}`); continue; }
+    for (const s of snaps.filter((f) => series(f) === name && cmp(path.basename(f), live[0]) >= 0))
+      problems.push(`${s} is not older than ${live[0]}`);
+  }
+  return problems;
 });
 
 // VR-03 / VR-04 Exports are cumulative and derived artefacts reproduce byte for byte.
